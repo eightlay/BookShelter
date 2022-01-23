@@ -39,12 +39,15 @@ class BookShelter:
             return False
         return True
 
+    def remove(self, bid: int) -> None:
+        del self._books[bid]
+
     def get(self, bid: int) -> Book:
         return self._books.get(bid)
 
     def update(self, bid: int, params: dict[str]) -> None:
         if bid in self._books:
-            self._books[bid].update(params)
+            self._books[bid] = Book(params)
         else:
             raise Exception(f"There is no book with id {bid}")
 

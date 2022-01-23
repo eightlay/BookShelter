@@ -1,6 +1,6 @@
 {
     "_GENERAL_FIELDS": ["title", "author", "year_written", "year_published", "read", "date_read", "genre", "comments"],
-    "_REQUIRED_FIELDS": ["title"],
+    "_REQUIRED_FIELDS": ["title", "author"],
     "_LANGUAGES": {
         "book_shelter": "Книжное убежище",
         "title": "Название",
@@ -11,6 +11,10 @@
         "date_read": "Дата прочтения",
         "genre": "Жанр",
         "comments": "Заметки",
-        "add_book": "Добавить книгу"
+        "add_book": "Добавить книгу",
+        "delete_book": "Удалить книгу",
+        "edit_book": "Обновить информацию",
+        "add_book_error_title": "Недостаточно реквизитов",
+        "add_book_error_message": "Для добавления книги необходимо указать название книги и имя автора."
     }
 }
