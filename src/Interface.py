@@ -85,8 +85,9 @@ class Interface:
 
     def update_book_list(self) -> None:
         self.book_list.delete(0, len(self.shelter.books))
-        self.book_list.insert(0, *self.shelter.books.values())
-
+        books = sorted([str(b) for b in self.shelter.books.values()])
+        self.book_list.insert(0, *books)
+        
     def edit_selected(self, event: tk.Event) -> None:
         bids = self.book_list.curselection()
         
@@ -115,6 +116,7 @@ class Interface:
         bid = self.book_list.curselection()[0]
         self.shelter.remove(bid)
         self.clear_fields(self.editing_fields)
+        self.update_book_list()
 
     def edit_book_info(self) -> None:
         if self.selected_bid:
