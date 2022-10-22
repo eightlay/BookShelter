@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pprint import pprint
 
 from src.settings import _REQUIRED_FIELDS
@@ -10,7 +11,7 @@ class Book:
     """
     def __init__(self, params: dict[str, str]) -> None:
         if all(f in params for f in _REQUIRED_FIELDS):
-            self.from_dict(params)
+            self.update(params)
         else:
             raise Exception("Add required fields to create book object")
 
@@ -31,7 +32,7 @@ class Book:
         Args:
             params (dict[str, str]): new data
         """
-        self.from_dict(params)
+        self.__dict__.update(params)
 
     def to_dict(self) -> dict[str, str]:
         """Book to dict
@@ -40,9 +41,6 @@ class Book:
             dict[str, str]: book's fields
         """
         return self.__dict__.copy()
-
-    def from_dict(self, params: dict[str, str]) -> None:
-        self.__dict__.update(params)
 
     def print(self) -> None:
         """Print book's fields

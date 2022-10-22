@@ -34,7 +34,7 @@ class BookShelter:
         """
         return self._books.copy()
     
-    def next_id(self) -> int:
+    def _next_id(self) -> int:
         """Generate next book id and return it
 
         Returns:
@@ -54,7 +54,7 @@ class BookShelter:
         """
         try:
             book = Book(params)
-            self._books[self.next_id()] = book
+            self._books[self._next_id()] = book
         except Exception as e:
             return False
         return True
@@ -94,7 +94,7 @@ class BookShelter:
         self._books[bid] = Book(params)
         return True
 
-    def save_close(self) -> None:
+    def save(self) -> None:
         """Write data to `data/books.csv`
         """
         with open(os.path.join(_BOOKS_PATH), "w+") as file:

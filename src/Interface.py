@@ -19,9 +19,6 @@ class Interface:
         self.books_editing()
 
     def start(self) -> None:
-        self.start_mainloop()
-
-    def start_mainloop(self) -> None:
         self.root.mainloop()
 
     def init_root(self) -> None:
