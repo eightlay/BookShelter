@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import Listbox, ttk
 import tkinter.messagebox as mg
 
-from src.settings import _GENERAL_FIELDS, _LANGUAGES
+from src.settings import _GENERAL_FIELDS, _LANGUAGES, _LANGUAGE_NAME
 from src.BookShelter import BookShelter
+
+FIELD_NAMES = _LANGUAGES[_LANGUAGE_NAME]
 
 
 class Interface:
@@ -26,12 +28,12 @@ class Interface:
         self.root = tk.Tk()
         self.root.geometry("720x481")
         self.root.resizable(False, False)
-        self.root.title(_LANGUAGES["book_shelter"])
+        self.root.title(FIELD_NAMES["book_shelter"])
         
         self.root.bind("<Return>", self.add_to_shelter)
         
         def on_close():
-            self.shelter.close()
+            self.shelter.save_close()
             self.root.destroy()
 
         self.root.protocol("WM_DELETE_WINDOW", on_close)
@@ -46,7 +48,7 @@ class Interface:
 
         # Add fields to frame
         for k, v in fields.items():
-            label = ttk.Label(block, text=_LANGUAGES[k])
+            label = ttk.Label(block, text=FIELD_NAMES[k])
             label.pack(fill='y', expand=True)
 
             entry = ttk.Entry(block, textvariable=v, justify='center')
@@ -58,7 +60,7 @@ class Interface:
         self.fields, add_block = self.create_field(0)
 
         login_button = ttk.Button(
-            add_block, text=_LANGUAGES["add_book"],
+            add_block, text=FIELD_NAMES["add_book"],
             command=self.add_to_shelter
         )
         login_button.pack(pady=10, fill='x', expand=True)
@@ -69,8 +71,8 @@ class Interface:
             self.clear_fields(self.fields)
             self.update_book_list()
         else:
-            mg.showerror(_LANGUAGES["add_book_error_title"],
-                         _LANGUAGES["add_book_error_message"])
+            mg.showerror(FIELD_NAMES["add_book_error_title"],
+                         FIELD_NAMES["add_book_error_message"])
 
     def get_fields_values(self, fields: dict) -> dict[str, str]:
         return {
@@ -128,13 +130,13 @@ class Interface:
         self.editing_fields, add_block = self.create_field(2)
         
         save_button = ttk.Button(
-            add_block, text=_LANGUAGES["edit_book"],
+            add_block, text=FIELD_NAMES["edit_book"],
             command=self.edit_book_info
         )
         save_button.pack(fill='x', expand=True)
         
         delete_button = ttk.Button(
-            add_block, text=_LANGUAGES["delete_book"],
+            add_block, text=FIELD_NAMES["delete_book"],
             command=self.delete_from_shelter
         )
         delete_button.pack(fill='x', expand=True)

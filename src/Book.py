@@ -17,7 +17,7 @@ class Book:
         self.from_dict(params)
 
     def to_dict(self) -> dict[str]:
-        return self.__dict__
+        return self.__dict__.copy()
 
     def from_dict(self, params: dict[str]) -> None:
         self.__dict__.update(params)

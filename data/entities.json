@@ -2,19 +2,21 @@
     "_GENERAL_FIELDS": ["title", "author", "year_written", "year_published", "read", "date_read", "genre", "comments"],
     "_REQUIRED_FIELDS": ["title", "author"],
     "_LANGUAGES": {
-        "book_shelter": "Книжное убежище",
-        "title": "Название",
-        "author": "Автор",
-        "year_written": "Год создания",
-        "year_published": "Год издания",
-        "read": "Прочитана",
-        "date_read": "Дата прочтения",
-        "genre": "Жанр",
-        "comments": "Заметки",
-        "add_book": "Добавить книгу",
-        "delete_book": "Удалить книгу",
-        "edit_book": "Обновить информацию",
-        "add_book_error_title": "Недостаточно реквизитов",
-        "add_book_error_message": "Для добавления книги необходимо указать название книги и имя автора."
+        "RUS": {
+            "book_shelter": "Книжное убежище",
+            "title": "Название",
+            "author": "Автор",
+            "year_written": "Год создания",
+            "year_published": "Год издания",
+            "read": "Прочитана",
+            "date_read": "Дата прочтения",
+            "genre": "Жанр",
+            "comments": "Заметки",
+            "add_book": "Добавить книгу",
+            "delete_book": "Удалить книгу",
+            "edit_book": "Обновить информацию",
+            "add_book_error_title": "Недостаточно реквизитов",
+            "add_book_error_message": "Для добавления книги необходимо указать название книги и имя автора."
+        }
     }
 }

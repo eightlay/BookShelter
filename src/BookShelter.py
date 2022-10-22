@@ -11,10 +11,11 @@ class BookShelter:
         self._load_books()
         
     def _load_books(self) -> None:
-        self._books = {}
+        self._books: dict[int, Book] = {}
         
         with open(os.path.join(_BOOKS_PATH), "r+") as file:
             reader = csv.reader(file)
+            
             for k, v in reader:
                 self._books[int(k)] = Book(literal_eval(v))
   
@@ -22,7 +23,7 @@ class BookShelter:
 
     @property
     def books(self) -> dict[int, Book]:
-        return self._books
+        return self._books.copy()
     
     def next_id(self) -> int:
         self.cid += 1
@@ -32,9 +33,6 @@ class BookShelter:
         try:
             book = Book(params)
             self._books[self.next_id()] = book
-            
-            # with open(os.path.join(_BOOKS_PATH), "a") as file:
-            #     file.write(f"\n{self.cid},\"{book.to_dict()}\"")
         except Exception as e:
             return False
         return True
@@ -45,13 +43,14 @@ class BookShelter:
     def get(self, bid: int) -> Book:
         return self._books.get(bid)
 
-    def update(self, bid: int, params: dict[str]) -> None:
-        if bid in self._books:
-            self._books[bid] = Book(params)
-        else:
-            raise Exception(f"There is no book with id {bid}")
+    def update(self, bid: int, params: dict[str]) -> bool:
+        if bid not in self._books:
+            return False
+        
+        self._books[bid] = Book(params)
+        return True
 
-    def close(self) -> None:
+    def save_close(self) -> None:
         with open(os.path.join(_BOOKS_PATH), "w+") as file:
             for bid, book in self._books.items():
                 file.write(f"{bid},\"{book.to_dict()}\"\n")

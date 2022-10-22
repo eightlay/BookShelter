@@ -1,10 +1,8 @@
 import json
 
-_DATA_PATH = "./data"
-
 _BOOKS_PATH = "./data/books.csv"
-
 _ENTITIES_PATH = "./data/entities.json"
+_LANGUAGE_NAME = "RUS"
 
 
 with open(_ENTITIES_PATH, "r") as file:
