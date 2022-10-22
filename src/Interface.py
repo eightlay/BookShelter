@@ -128,22 +128,23 @@ class Interface:
         Args:
             event (tk.Event): tkinter event
         """
-        bids = self.book_list.curselection()
-        
-        if len(bids) > 0:
-            self.selected_bid = bids[0]
-            self.show_selected(self.selected_bid)
+        if len(self.book_list.curselection()) > 0:
+            self.selected_bid = self.get_selected_book_id()
+            self.show_selected()
 
-    def show_selected(self, bid: int) -> None:
+    def show_selected(self) -> None:
         """Show the selected book info
-
-        Args:
-            bid (int): book id
         """
-        book = self.shelter.books[bid].to_dict()
+        book = self.shelter.books[self.selected_bid].to_dict()
 
         for field in _GENERAL_FIELDS:
             self.editing_fields[field].set(book.get(field, ""))
+        
+    def get_selected_book_id(self) -> int:
+        """Get currently selected book id"""
+        titleAuthor = self.book_list.get(tk.ANCHOR)
+        pattern = Book.split_str_repr(titleAuthor)
+        return self.shelter.find_id_by_pattern(pattern)
 
     def books_surfing(self) -> None:
         """Book surfing section creation
@@ -162,9 +163,7 @@ class Interface:
     def delete_from_shelter(self) -> None:
         """Delete the selected book from database
         """
-        titleAuthor = self.book_list.get(tk.ANCHOR)
-        pattern = Book.split_str_repr(titleAuthor)
-        bid = self.shelter.find_id_by_pattern(pattern)
+        bid = self.get_selected_book_id()
         
         if bid is None:
             raise IndexError("invalid book selected")
