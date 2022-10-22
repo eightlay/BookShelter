@@ -43,7 +43,7 @@ class BookShelter:
     def get(self, bid: int) -> Book:
         return self._books.get(bid)
 
-    def update(self, bid: int, params: dict[str]) -> bool:
+    def update(self, bid: int, params: dict[str, str]) -> bool:
         if bid not in self._books:
             return False
         

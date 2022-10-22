@@ -74,7 +74,7 @@ class Interface:
             mg.showerror(FIELD_NAMES["add_book_error_title"],
                          FIELD_NAMES["add_book_error_message"])
 
-    def get_fields_values(self, fields: dict) -> dict[str, str]:
+    def get_fields_values(self, fields: dict[str, str]) -> dict[str, str]:
         return {
             k: v.get()
             for k, v in fields.items()
@@ -122,7 +122,9 @@ class Interface:
 
     def edit_book_info(self) -> None:
         if self.selected_bid:
-            self.shelter.update(self.selected_bid, self.get_fields_values(self.editing_fields))
+            self.shelter.update(
+                self.selected_bid, self.get_fields_values(self.editing_fields)
+            )
             self.clear_fields(self.editing_fields)
             self.update_book_list()
 
