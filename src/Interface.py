@@ -19,9 +19,13 @@ class Interface:
         self.books_editing()
 
     def start(self) -> None:
+        """Start app
+        """
         self.root.mainloop()
 
     def init_root(self) -> None:
+        """Init Tkinter
+        """
         self.root = tk.Tk()
         self.root.geometry("720x481")
         self.root.resizable(False, False)
@@ -35,8 +39,16 @@ class Interface:
 
         self.root.protocol("WM_DELETE_WINDOW", on_close)
 
-    def create_field(self, col: int) -> tuple[dict[int, tk.StringVar], ttk.Frame]:
-        # Store book's title and author
+    def create_field(self, col: int) -> tuple[dict[str, tk.StringVar], ttk.Frame]:
+        """Create field block
+
+        Args:
+            col (int): number of columns in the block
+
+        Returns:
+            tuple[dict[str, tk.StringVar], ttk.Frame]: fields and block
+        """
+        # Store book's info
         fields = {k: tk.StringVar() for k in _GENERAL_FIELDS}
 
         # Add book frame
@@ -54,6 +66,8 @@ class Interface:
         return (fields, block)
 
     def books_adding(self) -> None:
+        """Create lock for book adding
+        """
         self.fields, add_block = self.create_field(0)
 
         login_button = ttk.Button(
@@ -63,6 +77,11 @@ class Interface:
         login_button.pack(pady=10, fill='x', expand=True)
 
     def add_to_shelter(self, event: tk.Event | None = None) -> None:
+        """Add to shelter button creation
+
+        Args:
+            event (tk.Event | None, optional): tkinter event. Defaults to None.
+        """
         valid = self.shelter.add(self.get_fields_values(self.fields))
         if valid:
             self.clear_fields(self.fields)
@@ -71,23 +90,43 @@ class Interface:
             mg.showerror(FIELD_NAMES["add_book_error_title"],
                          FIELD_NAMES["add_book_error_message"])
 
-    def get_fields_values(self, fields: dict[str, str]) -> dict[str, str]:
+    def get_fields_values(self, fields: dict[str, tk.StringVar]) -> dict[str, str]:
+        """Get non empty fields' values
+
+        Args:
+            fields (dict[str, str]): fields to gather data from
+
+        Returns:
+            dict[str, str]
+        """
         return {
             k: v.get()
             for k, v in fields.items()
             if v.get() != ""
         }
 
-    def clear_fields(self, fields: dict) -> None:
+    def clear_fields(self, fields: dict[str, tk.StringVar]) -> None:
+        """Clear all the given fields
+
+        Args:
+            fields (dict[str, tk.StringVar]): fields to clear
+        """
         for k in fields:
             fields[k].set("")
 
     def update_book_list(self) -> None:
+        """Update rendered book list
+        """
         self.book_list.delete(0, len(self.shelter.books))
         books = sorted([str(b) for b in self.shelter.books.values()])
         self.book_list.insert(0, *books)
         
     def edit_selected(self, event: tk.Event) -> None:
+        """Show the selected book
+
+        Args:
+            event (tk.Event): tkinter event
+        """
         bids = self.book_list.curselection()
         
         if len(bids) > 0:
@@ -95,29 +134,41 @@ class Interface:
             self.show_selected(self.selected_bid)
 
     def show_selected(self, bid: int) -> None:
+        """Show the selected book info
+
+        Args:
+            bid (int): book id
+        """
         book = self.shelter.books[bid].to_dict()
 
         for field in _GENERAL_FIELDS:
             self.editing_fields[field].set(book.get(field, ""))
 
     def books_surfing(self) -> None:
+        """Book surfing section creation
+        """
         surf_books = ttk.Frame(self.root)
         surf_books.grid(column=1, row=0, padx=10)
 
-        self.book_list = Listbox(surf_books, width=30,
-                                 height=27, justify='center')
+        self.book_list = Listbox(
+            surf_books, width=30, height=27, justify='center'
+        )
         self.book_list.pack(pady=10)
         self.book_list.bind("<<ListboxSelect>>", self.edit_selected)
 
         self.update_book_list()
 
     def delete_from_shelter(self) -> None:
+        """Delete the selected book from database
+        """
         bid = self.book_list.curselection()[0]
         self.shelter.remove(bid)
         self.clear_fields(self.editing_fields)
         self.update_book_list()
 
     def edit_book_info(self) -> None:
+        """Edit book's info
+        """
         if self.selected_bid:
             self.shelter.update(
                 self.selected_bid, self.get_fields_values(self.editing_fields)
@@ -126,6 +177,8 @@ class Interface:
             self.update_book_list()
 
     def books_editing(self) -> None:
+        """Book editing section creation
+        """
         self.editing_fields, add_block = self.create_field(2)
         
         save_button = ttk.Button(
