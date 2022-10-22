@@ -16,7 +16,23 @@
             "delete_book": "Удалить книгу",
             "edit_book": "Обновить информацию",
             "add_book_error_title": "Недостаточно реквизитов",
-            "add_book_error_message": "Для добавления книги необходимо указать название книги и имя автора."
+            "add_book_error_message": "Для добавления книги необходимо указать название книги и имя автора"
+        },
+        "ENG": {
+            "book_shelter": "Bool shelter",
+            "title": "Title",
+            "author": "Author",
+            "year_written": "Year written",
+            "year_published": "Year published",
+            "read": "Read",
+            "date_read": "Date read",
+            "genre": "Genre",
+            "comments": "Comments",
+            "add_book": "Add book",
+            "delete_book": "Delete book",
+            "edit_book": "Edit book",
+            "add_book_error_title": "Not enough details",
+            "add_book_error_message": "To add a book, you must specify the title of the book and the name of the author"
         }
     }
 }
