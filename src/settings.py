@@ -1,5 +1,4 @@
 import json
-from typing import Annotated
 
 _BOOKS_PATH = "./data/books.csv"
 """Path to books storage"""

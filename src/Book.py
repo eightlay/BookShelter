@@ -49,3 +49,21 @@ class Book:
 
     def __str__(self) -> str:
         return f"{self.title} - {self.author}"
+
+    @staticmethod
+    def split_str_repr(s: str) -> dict[str, str]:
+        """Split string representation of the book 
+        and return pattern for book search
+
+        Args:
+            s (str): title-author string representation
+
+        Returns:
+            dict[str, str]: pattern for book search
+        """
+        splitted = s.split(" - ")
+        
+        if len(splitted) != 2:
+            raise ValueError(f"can't split book representation '{s}'")
+        
+        return {"title": splitted[0], "author": splitted[1]}

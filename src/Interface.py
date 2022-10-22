@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import Listbox, ttk
 import tkinter.messagebox as mg
 
-from src.settings import _GENERAL_FIELDS, _LANGUAGES, _LANGUAGE_NAME
+from src.Book import Book
 from src.BookShelter import BookShelter
+from src.settings import _GENERAL_FIELDS, _LANGUAGES, _LANGUAGE_NAME
 
 FIELD_NAMES = _LANGUAGES[_LANGUAGE_NAME]
 
@@ -34,7 +35,7 @@ class Interface:
         self.root.bind("<Return>", self.add_to_shelter)
         
         def on_close():
-            self.shelter.save_close()
+            self.shelter.save()
             self.root.destroy()
 
         self.root.protocol("WM_DELETE_WINDOW", on_close)
@@ -161,7 +162,13 @@ class Interface:
     def delete_from_shelter(self) -> None:
         """Delete the selected book from database
         """
-        bid = self.book_list.curselection()[0]
+        titleAuthor = self.book_list.get(tk.ANCHOR)
+        pattern = Book.split_str_repr(titleAuthor)
+        bid = self.shelter.find_id_by_pattern(pattern)
+        
+        if bid is None:
+            raise IndexError("invalid book selected")
+        
         self.shelter.remove(bid)
         self.clear_fields(self.editing_fields)
         self.update_book_list()

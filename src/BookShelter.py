@@ -24,6 +24,12 @@ class BookShelter:
                 self._books[int(k)] = Book(literal_eval(v))
   
         self.cid = max(self._books)
+        
+    def find_id_by_pattern(self, pattern: dict[str, str]) -> int | None:
+        for id, book in self._books.items():
+            if book.match(pattern):
+                return id
+        return None
 
     @property
     def books(self) -> dict[int, Book]:
